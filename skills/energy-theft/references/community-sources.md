@@ -1,20 +1,95 @@
-# 开源社区检索路线
+# 查找方法：生成查询，按结果转向，接续执行
 
-按任务缺口选择渠道；这不是依赖或安装清单。各站点内容、可用性、许可和接口以当时核验为准。
+在存在待查能力或条件时读取。当前成果已经可用，就核验变化并接着做；本文件不是要求每个任务走完所有入口。查询和判断在执行中完成，不要求用户填写表格。
 
-- [GitHub](https://github.com/)：发现完整项目、库、组件和失败经验，追到源仓库的代码、版本、测试、许可证、Issues 或修复。
-- [skills.sh](https://skills.sh/) 与 [SkillHub](https://skillhub.cn/)：按任务找 Skill，再追溯作者和原始文件；目录、审核标识和热度不能代替当前场景测试。
-- 相关维护者文档、社区及领域资料：针对具体环境、版本与失败条件找补充证据。
+## 1. 把目标转成首条查询
 
-把需求拆成能力、平台、输入与限制，用中文、英文和同义词查找；反证可以查 unsupported、limitation、failure、regression。不要把不同转载当作独立证据。找到满足硬约束且已验证的候选后停止，不为凑数无限搜索。
+从主正文的目标、事实和硬约束中，选出当前最影响完成的一个缺口。明确预期要找到的是成果、操作入口、模块、流程还是失败修复，再选下面对应的查询。不要只把整件任务名称换几个近义词。
 
-设计参考：[Vercel find-skills](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md) 的发现和检索思路；本 Skill 的适配判断、证据分层与验收流程来自本项目的工作方法，不依赖或安装该 Skill。另见 [Agent Skills 格式规范](https://agentskills.io/specification)。
+| 待查问题 | 首条查询怎样写 | 先去哪里 |
+| --- | --- | --- |
+| 自己是否做过 | 项目别名＋具体功能或产物类型；有原任务/文件引用时直接打开 | 原项目入口、相关任务记录、已安装能力和已有文件 |
+| 现有工具能否完成 | 公共工具名＋具体操作＋影响行为的版本 | 当前工具帮助、配置和官方说明 |
+| 缺少一个实现 | 能力词＋运行环境；结果过宽时再加入关键约束 | 原始开源仓库、库/组件或 Skill 目录 |
+| 某一步失败 | 可公开的错误类别＋版本＋最小触发条件 | 官方文档、原问题记录、修复提交 |
+| 缺少执行方法 | 具体动作＋对象＋影响成败的条件 | 原流程、模板、案例或复盘 |
 
-其他设计参考：
+中文词没有有效命中且来源主要使用英文时，补能力的英文词、常用术语或原始错误类别；已有精确命中则不机械双语重搜。对外查询的脱敏和权限边界按主正文执行，不能把私密日志直接拼成关键词。
 
-- [evaluate-existing-solutions](https://github.com/citypaul/.dotfiles/blob/main/claude/.claude/skills/evaluate-existing-solutions/SKILL.md)：按影响选择比较深度，评估采用和维护成本。
-- [skill-mining](https://github.com/voodootikigod/skill-mining/blob/main/skill-mining/SKILL.md)：创建前查重，区分无法检索和未找到结果。
-- [upskill](https://github.com/yungbose/upskill)：根据实际使用中的失败与反馈判断是否修订。
-- [Microsoft SkillOpt 维护者报告](https://microsoft.github.io/SkillOpt/blog/gating-reflection-safe-updates/)：将反馈归因、更新和后续验证分开。
+## 2. 根据实际返回决定下一步
 
-这些是方法参考，不代表已安装、运行或整体采用上述项目，也不代表其作者背书本 Skill。具体版本和适用性须在使用时核验。
+每次追加查找前明确：**还缺哪个事实？答案会改变采用、适配、组合还是新建的哪个决定？** 没有这样的未知，就进入执行或报告已确定的阻断，不继续扩搜。
+
+| 实际返回 | 下一步 | 何时离开查找 |
+| --- | --- | --- |
+| 现成成果看起来满足目标 | 定位原成果和版本，核验最可能导致返工的条件 | 条件成立后直接使用；不再为了比较而另找候选 |
+| 整件不适合，但有可用部分 | 指出具体不适配项，只针对剩余能力查模块、原生功能或可迁移步骤 | 可组合部分足以交付时，进入适配 |
+| 候选很多或互相矛盾 | 用硬约束排除；对影响选择的冲突追到原文/实现 | 获得足以选择的证据后停止排名；不凑固定候选数 |
+| 缺少一个可查事实 | 版本支持、许可范围、接口行为等查原文；保留冲突和未知 | 原文足以决定时执行；仍依赖本输入的条件转样本 |
+| 条件只能实测 | 例如字体保真、解析结果、当前入口是否可用，使用最小代表性样本 | 通过后继续真实任务；失败只回到暴露的缺口 |
+| 查询成功，但没有相关命中 | 检查是否词不对或条件堆得过多；拆一个更小能力，或换邻近术语/来源 | 新查询须带来不同信息；重复同源结果不算新增覆盖 |
+| 工具报错、限流、无权限或来源不可达 | 核验实际失败，查已配置的专用入口或可信原始替代来源 | 有可行路线就继续；无可用入口则保留范围与缺口，不宣布方案不存在 |
+
+搜索词可以暂时放宽以发现可借用部分，实际采用时仍执行原硬约束。不能把“查询未包含某限制”变成“可以忽略该限制”。
+
+授权、许可、数据边界或关键兼容条件未解决时，停止的是扩搜或受影响的采用，不是自动批准执行。已有证据表明继续查询不会改变决定，就在授权内选择已知安全路径、仅新建已确认缺口，或交付已完成部分及阻断条件。不得用不适配的工具强行凑成复用。
+
+## 3. 定位证据后借用
+
+搜索摘要、热度和转载只作线索。进入原始文档、源码、示例/测试、版本记录或维护者的具体修复，确认本次借用的部分及其适用条件。多个转载追溯到同一来源时只算一份依据。
+
+常用入口按任务选用，不要求全部访问：
+
+- [GitHub](https://github.com/)：发现项目后进仓库内的实现、测试、Issues、Discussions 与修复 PR。
+- [skills.sh](https://skills.sh/)、[SkillsMP](https://skillsmp.com/)：发现能力，再回条目关联的原始仓库核对 SKILL.md、依赖和许可。
+- [OpenAI Skills](https://github.com/openai/skills)、[Anthropic Skills](https://github.com/anthropics/skills)：按当前运行端与实际任务查具体能力，不加载整个集合。
+- 当前工具的官方帮助、维护者社区及行业原始案例：查精确条件、失败现象和修复结果。
+
+入口可用性与内容在使用时核验。复用已有搜索工具；不为一次查询安装陌生检索器、注册付费服务或建立新平台。
+
+## 4. 从采用回到交付
+
+把选中的成果接回原任务，完成必要适配和真实输入验收。发现剩余缺口才重开对应查询；保留已验证中间结果。普通任务只留来源、借用部分、缺口和验证结果，复杂比较再用[决策模板](decision-template.md)。
+
+## 可复现示例
+
+### 演示：用已有标准库导出 CSV
+
+任务：将 JSON 记录导出 CSV，保留中文、逗号、双引号和字段内换行，缺失值为空；本机执行，不安装依赖。以下是构造的演示数据，不是用户业务材料。
+
+本次实际查找：先核验已安装 Python；以 `site:docs.python.org/3/library/csv.html DictWriter newline quoting None empty string` 查询，搜索和网页直读均未取得返回，未记为“无方案”。一次有界请求取得 [Python 3.9 csv 官方页面](https://docs.python.org/3.9/library/csv.html) 的 HTTP 200 响应和 API 锚点，只证明页面可达；具体行为由本机标准库文档、API 签名和输出回读核验。已找到满足约束的标准库，停止查找第三方转换器。
+
+借用 `json` 读取与 `csv.DictWriter` 的转义/序列化，只补字段映射和文件读写；没有重写 CSV 编码器。用三条记录覆盖引号、换行、缺失字段和零值，实际导出后逐字段回读。
+
+在新的临时目录用现有 Python 3 运行以下命令；没有 Python 时先记录缺失，不因本示例自动安装：
+
+```bash
+python3 -B - <<'PY'
+import csv, json
+from pathlib import Path
+records = json.loads(r'''[
+  {"id":"demo-001","name":"演示玉米","note":"含逗号,和\"双引号\"","quantity":3},
+  {"id":"demo-002","name":"演示番茄","note":"第一行\n第二行","quantity":0},
+  {"id":"demo-003","name":"演示青菜"}
+]''')
+fields = ["id", "name", "note", "quantity"]
+output = Path("records.demo.csv")
+with output.open("w", encoding="utf-8", newline="") as f:
+    w = csv.DictWriter(f, fieldnames=fields, restval="", lineterminator="\n")
+    w.writeheader()
+    w.writerows(records)
+with output.open(encoding="utf-8", newline="") as f:
+    reader = csv.DictReader(f)
+    assert reader.fieldnames == fields
+    actual = list(reader)
+expected = [{k: str(row.get(k, "")) for k in fields} for row in records]
+assert actual == expected
+print("PASS:", len(actual), "records ->", output)
+PY
+```
+
+本次实际导出得到 3 条、145 字节 CSV，中文、逗号/双引号、字段内换行、缺失空值与零值回读相等。示例说明该次复用可行，不证明处理所有输入、表格软件显示一致或比不用 Skill 更省工。遇到额外字段、嵌套值或其他输入，先核对其输出约定。
+
+## 方法来源
+
+查询拆分借鉴 [Vercel find-skills](https://github.com/vercel-labs/skills/blob/main/skills/find-skills/SKILL.md) 的任务/领域检索和原仓库定位；没有执行其安装器，也没有采用星标或安装量门槛。本版把查找结果连接到下一次查询、最小验证和实际交付，具体效果仍须独立任务确认。
